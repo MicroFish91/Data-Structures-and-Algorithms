@@ -1,8 +1,51 @@
 class MinHeap {
   public values: number[];
 
-  constructor() {
-    this.values = [];
+  constructor(vals?: number[]) {
+    this.values = vals ? MinHeap.buildHeap(vals) : [];
+  }
+
+  static buildHeap(vals: number[]): number[] {
+    const startIdx = Math.floor(vals.length / 2) - 1;
+
+    for (let i = startIdx; i >= 0; i--) {
+      heapify(i);
+    }
+
+    return vals;
+
+    function heapify(idx: number) {
+      let currentIdx = idx;
+      let childOneIdx, childTwoIdx, swapIdx;
+      let childOneVal, childTwoVal;
+      const currentVal = vals[idx];
+
+      while (true) {
+        childOneIdx = 2 * currentIdx + 1;
+        childTwoIdx = 2 * currentIdx + 2;
+        childOneVal = childOneIdx < vals.length ? vals[childOneIdx] : null;
+        childTwoVal = childTwoIdx < vals.length ? vals[childTwoIdx] : null;
+        swapIdx = undefined;
+
+        if (childOneVal !== null) {
+          if (currentVal > childOneVal) {
+            swapIdx = childOneIdx;
+          }
+        }
+
+        if (childTwoVal !== null) {
+          if (childTwoVal < childOneVal && currentVal > childTwoVal) {
+            swapIdx = childTwoIdx;
+          }
+        }
+
+        if (!swapIdx) break;
+
+        [vals[currentIdx], vals[swapIdx]] = [vals[swapIdx], vals[currentIdx]];
+
+        currentIdx = swapIdx;
+      }
+    }
   }
 
   // [0, 1, 2, 3, 4, 5, 6]
@@ -95,19 +138,21 @@ class MinHeap {
   }
 }
 
-const minHeap = new MinHeap();
+const minHeap = new MinHeap([5, 2, 7, 1, 3, 2, 4]);
 
-minHeap.insert(2);
-minHeap.insert(4);
-minHeap.insert(1);
-minHeap.insert(0);
-minHeap.insert(-1);
+// minHeap.insert(2);
+// minHeap.insert(4);
+// minHeap.insert(1);
+// minHeap.insert(0);
+// minHeap.insert(-1);
 
-minHeap.extractMin();
-console.log(minHeap.values);
+// minHeap.extractMin();
+// console.log(minHeap.values);
 
-minHeap.extractMin();
-console.log(minHeap.values);
+// minHeap.extractMin();
+// console.log(minHeap.values);
 
-minHeap.extractMin();
+// minHeap.extractMin();
+// console.log(minHeap.values);
+
 console.log(minHeap.values);
