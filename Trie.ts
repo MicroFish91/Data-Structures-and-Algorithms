@@ -47,6 +47,38 @@ class Trie {
     return current.endOfWord;
   }
 
+  delete(word: string): boolean {
+    let current = this.root;
+    let previousEnd = null;
+    let previousEndLetter = "";
+
+    for (let i = 0; i < word.length; i++) {
+      const letter = word[i];
+
+      if (!current.letters[letter]) {
+        return false;
+      }
+
+      current = current.letters[letter];
+
+      if (current.endOfWord && i !== word.length - 1) {
+        previousEnd = current;
+        previousEndLetter = word[i + 1];
+      }
+    }
+
+    if (current.endOfWord !== true) {
+      return false;
+    } else {
+      if (!Object.keys(current.letters).length) {
+        delete previousEnd.letters[previousEndLetter];
+      } else {
+        current.endOfWord = false;
+      }
+      return true;
+    }
+  }
+
   listAll(): string[] {
     const list = [];
 
@@ -82,6 +114,9 @@ const trie = new Trie();
 
 trie.insert("hello");
 trie.insert("hell");
+trie.insert("pony");
 trie.insert("apple");
+
+console.log(trie.delete("hello"));
 
 console.log(trie.listAll());
