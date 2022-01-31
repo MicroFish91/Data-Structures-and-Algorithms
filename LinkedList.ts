@@ -1,4 +1,4 @@
-class ListNode {
+export class ListNode {
   public val: any;
   public next: ListNode;
 
@@ -8,11 +8,11 @@ class ListNode {
   }
 }
 
-class LinkedList {
+export class LinkedList {
   public head: ListNode;
   public tail: ListNode;
 
-  constructor() {
+  constructor(list?: number[]) {
     this.head = null;
     this.tail = null;
   }
