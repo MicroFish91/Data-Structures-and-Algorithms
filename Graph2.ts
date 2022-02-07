@@ -83,4 +83,123 @@ class Graph2 {
 
     return false;
   }
+
+  bfs(startNode: string): string[] {
+    const bfsResults = [];
+    const queue = [startNode];
+    const visited = new Set();
+
+    visited.add(startNode);
+
+    while (queue.length) {
+      const node = queue.shift();
+      const edges = this.vertices[node].getEdges();
+
+      bfsResults.push(node);
+
+      for (let i = 0; i < edges.length; i++) {
+        const edge = edges[i];
+        if (!visited.has(edge)) {
+          visited.add(edge);
+          queue.push(edge);
+        }
+      }
+    }
+
+    return bfsResults;
+  }
+
+  dfs(startNode: string): string[] {
+    const dfsResults = [];
+    const visited = new Set();
+    const { vertices } = this;
+
+    visited.add(startNode);
+
+    traverse(startNode);
+    return dfsResults;
+
+    function traverse(node: string) {
+      const edges = vertices[node].getEdges();
+      dfsResults.push(node);
+
+      for (let i = 0; i < edges.length; i++) {
+        const edgeNode = edges[i];
+        if (!visited.has(edgeNode)) {
+          visited.add(edgeNode);
+          traverse(edgeNode);
+        }
+      }
+    }
+  }
+
+  shortestPath(from: string, to: string) {
+    const queue = [from];
+    const visited = {
+      [from]: null,
+    };
+
+    while (queue.length) {
+      const node = queue.shift();
+      const edgesList = this.vertices[node].getEdges();
+
+      if (node === to) break;
+
+      for (let i = 0; i < edgesList.length; i++) {
+        const edgeNode = edgesList[i];
+        if (visited[edgeNode] !== null) {
+          visited[edgeNode] = node;
+          queue.push(edgeNode);
+        }
+      }
+    }
+
+    return reconstructPath(to, visited);
+
+    function reconstructPath(
+      endNode: string,
+      map: { [vertex: string]: string }
+    ): string[] {
+      const path = [endNode];
+      let current = endNode;
+
+      while (true) {
+        current = map[current];
+        if (!current) break;
+        path.push(current);
+      }
+
+      return path.reverse();
+    }
+  }
 }
+
+const graph2 = new Graph2();
+
+graph2.addVertex("DFW");
+graph2.addVertex("HNL");
+graph2.addVertex("LAX");
+graph2.addVertex("EWR");
+graph2.addVertex("SAN");
+graph2.addVertex("JFK");
+graph2.addVertex("BOS");
+graph2.addVertex("MIA");
+graph2.addVertex("MCO");
+graph2.addVertex("PBI");
+
+graph2.addEdge("HNL", "LAX");
+graph2.addEdge("LAX", "EWR");
+graph2.addEdge("LAX", "SAN");
+graph2.addEdge("LAX", "DFW");
+graph2.addEdge("DFW", "JFK");
+graph2.addEdge("JFK", "BOS");
+graph2.addEdge("JFK", "MIA");
+graph2.addEdge("MIA", "MCO");
+graph2.addEdge("MIA", "PBI");
+graph2.addEdge("PBI", "MCO");
+
+// console.log(graph2.vertices);
+
+// console.log(graph2.bfs("DFW"));
+// console.log(graph2.dfs("DFW"));
+console.log(graph2.shortestPath("DFW", "BOS"));
