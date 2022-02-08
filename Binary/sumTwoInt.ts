@@ -1,14 +1,23 @@
-function sumTwoIntegers(a: number, b: number): number {
+// 5 + 12
+//  168421
+// 5: 0101
+//12: 1100
+//17:10001
+
+// XOR : 1001
+// carry: 0100 << 1 + &&
+
+function sumTwoInt(a: number, b: number): number {
   let carry;
 
-  while (b) {
-    // XOR => answer without carry
+  while (true) {
     carry = a & b;
     a ^= b;
-    carry = carry << 1;
+    if (!carry) break;
+    b = carry << 1;
   }
 
   return a;
 }
 
-console.log(sumTwoIntegers(5, 12));
+console.log(sumTwoInt(5, 12));
