@@ -6,8 +6,6 @@ function spiralMatrix(matrix: number[][]): number[] {
   let c = 0;
 
   while (true) {
-    console.log(r, c, visited);
-
     const elem = matrix[r][c];
 
     spiralPath.push(elem);

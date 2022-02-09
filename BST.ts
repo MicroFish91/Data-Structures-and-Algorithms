@@ -1,4 +1,4 @@
-class BstNode {
+export class BstNode {
   public val: number;
   public left: BstNode;
   public right: BstNode;
@@ -10,7 +10,7 @@ class BstNode {
   }
 }
 
-class BST {
+export class BST {
   public root: BstNode;
 
   constructor(array?: number[]) {
@@ -120,6 +120,32 @@ class BST {
     return traversal;
   }
 
+  dfsInOrder(): number[] {
+    const traversal = [];
+
+    function traverse(node: BstNode) {
+      if (node?.left) traverse(node.left);
+      traversal.push(node.val);
+      if (node?.right) traverse(node.right);
+    }
+
+    traverse(this.root);
+    return traversal;
+  }
+
+  dfsPost(): number[] {
+    const traversal = [];
+
+    function traverse(node: BstNode) {
+      if (node?.left) traverse(node.left);
+      if (node?.right) traverse(node.right);
+      traversal.push(node.val);
+    }
+
+    traverse(this.root);
+    return traversal;
+  }
+
   delete(val: number): boolean {
     let currentNode = this.root;
     let parentNode;
@@ -206,6 +232,14 @@ class BST {
 
 const bst = new BST([10, 6, 15, 3, 8, 13]);
 
+//           10
+//        6      15
+//      3   8  13
+
+// console.log(bst.dfsPre());
+// console.log(bst.dfsInOrder());
+// console.log(bst.dfsPost());
+
 // bst.insert(3);
 // bst.insert(2);
 // bst.insert(1);
@@ -222,6 +256,6 @@ const bst = new BST([10, 6, 15, 3, 8, 13]);
 // console.log(bst);
 // console.log(bst.bfs());
 
-console.log(bst.bfs());
-bst.delete(15);
-console.log(bst.bfs());
+// console.log(bst.bfs());
+// bst.delete(15);
+// console.log(bst.bfs());
