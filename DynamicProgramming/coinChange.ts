@@ -1,4 +1,5 @@
 // Brute Force with dfs
+// O(A * C)
 function coinChange(coins: number[], amount: number): number {
   let minLength = Infinity;
   traverse(amount, 0);
@@ -23,6 +24,7 @@ function coinChange(coins: number[], amount: number): number {
 }
 
 // dp
+// O(A * C) but with caching to reduce time
 function coinChange2(coins: number[], amount: number): number {
   const dp = {
     0: 0,

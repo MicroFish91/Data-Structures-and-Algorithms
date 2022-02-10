@@ -1,5 +1,5 @@
 // Set allows O(1) to add edge
-class GraphNode2 {
+export class GraphNode2 {
   public edgesList: Set<string>;
 
   constructor() {
@@ -24,7 +24,7 @@ class GraphNode2 {
 }
 
 // hash map allows O(1) to add vertex
-class Graph2 {
+export class Graph2 {
   public vertices: { [vertex: string]: GraphNode2 };
 
   constructor() {
